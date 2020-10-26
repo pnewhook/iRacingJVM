@@ -10,7 +10,6 @@ class VariableBuffer {
         val byteBuffer = ByteBuffer.wrap(rawBytes).order(ByteOrder.LITTLE_ENDIAN)
         tickCount = byteBuffer.int
         bufOffset = byteBuffer.int
-
     }
 
 }

@@ -13,7 +13,7 @@ class iRacingSDKTests {
 
     @BeforeEach
     fun setup() {
-        val sdk = iRacingSDK();
+        val sdk = iRacingSDK()
         telemetryData = sdk.readFile(
             Paths.get(
                 this.javaClass.getResource("/mx5 mx52016_oulton international 2020-10-12 19-52-39.ibt").toURI()
@@ -39,7 +39,54 @@ class iRacingSDKTests {
 
     @Test
     fun `readFile should read sessionInfo`() {
-        assertEquals("oulton international", telemetryData.sessionInfo.weekendInfo.trackName)
-        assertEquals(180, telemetryData.sessionInfo.weekendInfo.trackId)
+        val sessionInfo = telemetryData.sessionInfo
+        assertEquals("oulton international", sessionInfo.weekendInfo.trackName)
+        assertEquals(180, sessionInfo.weekendInfo.trackId)
+        assertEquals("4.29 km", sessionInfo.weekendInfo.trackLength)
+        assertEquals("Oulton Park Circuit", sessionInfo.weekendInfo.trackDisplayName)
+        assertEquals("Oulton", sessionInfo.weekendInfo.trackDisplayShortName)
+        assertEquals("International", sessionInfo.weekendInfo.trackConfigName)
+        assertEquals("Little Budworth", sessionInfo.weekendInfo.trackCity)
+        assertEquals("England", sessionInfo.weekendInfo.trackCountry)
+        assertEquals("69.47 m", sessionInfo.weekendInfo.trackAltitude)
+        assertEquals("53.180009 m", sessionInfo.weekendInfo.trackLatitude)
+        assertEquals("-2.612779 m", sessionInfo.weekendInfo.trackLongitude)
+        assertEquals("3.0267 rad", sessionInfo.weekendInfo.trackNorthOffset)
+        assertEquals(17, sessionInfo.weekendInfo.trackNumTurns)
+        assertEquals("49.97 kph", sessionInfo.weekendInfo.trackPitSpeedLimit)
+        assertEquals("road course", sessionInfo.weekendInfo.trackType)
+        assertEquals("neutral", sessionInfo.weekendInfo.trackDirection)
+        assertEquals("Specified / Dynamic Sky", sessionInfo.weekendInfo.trackWeatherType)
+        assertEquals("Partly Cloudy", sessionInfo.weekendInfo.trackSkies)
+        assertEquals("39.80 C", sessionInfo.weekendInfo.trackSurfaceTemp)
+        assertEquals("25.55 C", sessionInfo.weekendInfo.trackAirTemp)
+        assertEquals("0.89 m/s", sessionInfo.weekendInfo.trackWindVel)
+        assertEquals("0.00 rad", sessionInfo.weekendInfo.trackWindDir)
+        assertEquals("55 %", sessionInfo.weekendInfo.trackRelativeHumidity)
+        assertEquals("0 %", sessionInfo.weekendInfo.trackFogLevel)
+        assertEquals(true, sessionInfo.weekendInfo.trackCleanup)
+        assertEquals(true, sessionInfo.weekendInfo.trackDynamicTrack)
+        assertEquals("2020.09.04.01", sessionInfo.weekendInfo.trackVersion)
+        assertEquals(139, sessionInfo.weekendInfo.seriesID)
+        assertEquals(2915, sessionInfo.weekendInfo.seasonID)
+        assertEquals(139407965, sessionInfo.weekendInfo.sessionID)
+        assertEquals(35053319, sessionInfo.weekendInfo.subSessionID)
+        assertEquals(0, sessionInfo.weekendInfo.leagueID)
+        assertEquals(true, sessionInfo.weekendInfo.official)
+        assertEquals(4, sessionInfo.weekendInfo.raceWeek)
+        assertEquals("Practice", sessionInfo.weekendInfo.eventType)
+        assertEquals("Road", sessionInfo.weekendInfo.category)
+        assertEquals("full", sessionInfo.weekendInfo.simMode)
+        assertEquals(false, sessionInfo.weekendInfo.teamRacing)
+        assertEquals(0, sessionInfo.weekendInfo.minDrivers)
+        assertEquals(1, sessionInfo.weekendInfo.maxDrivers)
+        assertEquals("None", sessionInfo.weekendInfo.dCRuleSet)
+        assertEquals(false, sessionInfo.weekendInfo.qualifierMustStartRace)
+        assertEquals(1, sessionInfo.weekendInfo.numCarClasses)
+        assertEquals(1, sessionInfo.weekendInfo.numCarTypes)
+        assertEquals(false, sessionInfo.weekendInfo.heatRacing)
+        assertEquals("Release", sessionInfo.weekendInfo.buildType)
+        assertEquals("Members", sessionInfo.weekendInfo.buildTarget)
+        assertEquals("2020.10.07.02", sessionInfo.weekendInfo.buildVersion)
     }
 }
