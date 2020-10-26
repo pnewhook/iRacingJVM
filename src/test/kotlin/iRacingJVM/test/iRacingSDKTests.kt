@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.nio.file.Paths
+import java.time.LocalDate
+import java.time.LocalTime
 
 class iRacingSDKTests {
 
@@ -88,5 +90,44 @@ class iRacingSDKTests {
         assertEquals("Release", sessionInfo.weekendInfo.buildType)
         assertEquals("Members", sessionInfo.weekendInfo.buildTarget)
         assertEquals("2020.10.07.02", sessionInfo.weekendInfo.buildVersion)
+    }
+
+    @Test
+    fun weekendOptions() {
+        val weekendOptions = telemetryData.sessionInfo.weekendInfo.weekendOptions
+        assertEquals(12, weekendOptions.numStarters)
+        assertEquals("2x2 inline pole on left", weekendOptions.startingGrid)
+        assertEquals("best lap", weekendOptions.qualifyScoring)
+        assertEquals("off", weekendOptions.courseCautions)
+        assertEquals(true, weekendOptions.standingStart)
+        assertEquals(false, weekendOptions.shortParadeLap)
+        assertEquals("single file", weekendOptions.restarts)
+        assertEquals("Specified / Dynamic Sky", weekendOptions.weatherType)
+        assertEquals("Partly Cloudy", weekendOptions.skies)
+        assertEquals("N", weekendOptions.windDirection)
+        assertEquals("3.22 km/h", weekendOptions.windSpeed)
+        assertEquals("25.56 C", weekendOptions.weatherTemp)
+        assertEquals("55 %", weekendOptions.relativeHumidity)
+        assertEquals("0 %", weekendOptions.fogLevel)
+        assertEquals(LocalTime.of(13, 40), weekendOptions.timeOfDay)
+        assertEquals(LocalDate.parse("2019-05-20"), weekendOptions.date)
+        assertEquals(1, weekendOptions.earthRotationSpeedupFactor)
+        assertEquals(false, weekendOptions.unofficial)
+        assertEquals("consumer", weekendOptions.commercialMode)
+        assertEquals("variable", weekendOptions.nightMode)
+        assertEquals(true, weekendOptions.isFixedSetup)
+        assertEquals("default", weekendOptions.strictLapsChecking)
+        assertEquals(true, weekendOptions.hasOpenRegistration)
+        assertEquals(1, weekendOptions.hardcoreLevel)
+        assertEquals(0, weekendOptions.numJokerLaps)
+        assertEquals("unlimited", weekendOptions.incidentLimit)
+        assertEquals(1, weekendOptions.fastRepairsLimit)
+        assertEquals(0, weekendOptions.greenWhiteCheckeredLimit)
+    }
+
+    @Test
+    fun telemetryOptions() {
+        val telemetryOptions = telemetryData.sessionInfo.weekendInfo.telemetryOptions
+        assertEquals("", telemetryOptions.telemetryDiskFile)
     }
 }
