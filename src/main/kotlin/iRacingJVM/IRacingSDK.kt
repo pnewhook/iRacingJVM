@@ -55,8 +55,8 @@ class iRacingSDK {
 
     companion object {
         // Size of
-        const val HEADER_LENGTH: Int = (Int.SIZE_BYTES * 12) + (Int.SIZE_BYTES * 4 * IRSDK_MAX_BUFS)
         const val IRSDK_MAX_BUFS: Int = 4
+        const val HEADER_LENGTH: Int = (Int.SIZE_BYTES * 12) + (Int.SIZE_BYTES * 4 * IRSDK_MAX_BUFS)
         const val IRSDK_MAX_STRING: Int = 32
         const val IRSDK_MAX_DESC: Int = 64
         const val IRSDK_VER: Int = 2
