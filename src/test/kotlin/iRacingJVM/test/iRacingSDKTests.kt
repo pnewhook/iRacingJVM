@@ -3,6 +3,7 @@ package iRacingJVM.test
 import iRacingJVM.iRacingSDK
 import iRacingJVM.models.TelemetryData
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.nio.file.Paths
@@ -41,7 +42,7 @@ class iRacingSDKTests {
 
     @Test
     fun `readFile should read sessionInfo`() {
-        val sessionInfo = telemetryData.sessionInfo
+        val sessionInfo = telemetryData.session
         assertEquals("oulton international", sessionInfo.weekendInfo.trackName)
         assertEquals(180, sessionInfo.weekendInfo.trackId)
         assertEquals("4.29 km", sessionInfo.weekendInfo.trackLength)
@@ -94,7 +95,7 @@ class iRacingSDKTests {
 
     @Test
     fun weekendOptions() {
-        val weekendOptions = telemetryData.sessionInfo.weekendInfo.weekendOptions
+        val weekendOptions = telemetryData.session.weekendInfo.weekendOptions
         assertEquals(12, weekendOptions.numStarters)
         assertEquals("2x2 inline pole on left", weekendOptions.startingGrid)
         assertEquals("best lap", weekendOptions.qualifyScoring)
@@ -127,7 +128,53 @@ class iRacingSDKTests {
 
     @Test
     fun telemetryOptions() {
-        val telemetryOptions = telemetryData.sessionInfo.weekendInfo.telemetryOptions
+        val telemetryOptions = telemetryData.session.weekendInfo.telemetryOptions
         assertEquals("", telemetryOptions.telemetryDiskFile)
+    }
+
+    @Test
+    fun carSetup() {
+        val setup = telemetryData.session.carSetup
+        assertEquals(1, setup.updateCount)
+    }
+
+    @Test
+    fun suspension() {
+        val suspension = telemetryData.session.carSetup.suspension
+        assertNotNull(suspension.leftFront)
+        assertNotNull(suspension.leftRear)
+        assertNotNull(suspension.rightFront)
+        assertNotNull(suspension.rightRear)
+    }
+
+    @Test
+    fun frontSetup() {
+        val frontSetup = telemetryData.session.carSetup.suspension.front
+        assertEquals("-1 mm", frontSetup.toeIn)
+        assertEquals("50.0%", frontSetup.crossWeight)
+        assertEquals("Firm", frontSetup.antiRollBar)
+    }
+
+    @Test
+    fun rearSetup() {
+        val rearSetup = telemetryData.session.carSetup.suspension.rear
+        assertEquals("20.0 L", rearSetup.fuelLevel)
+        assertEquals("+4 mm", rearSetup.toeIn)
+        assertEquals("Unhooked", rearSetup.antiRollBar)
+    }
+
+    @Test
+    fun tireSetup() {
+        val frontRight = telemetryData.session.carSetup.suspension.rightFront
+        assertEquals("207 kPa", frontRight.coldPressure)
+        assertEquals("207 kPa", frontRight.lastHotPressure)
+        assertEquals("39C, 39C, 39C", frontRight.lastTempsOMI)
+        assertEquals("100%, 100%, 100%", frontRight.treadRemaining)
+        assertEquals("2455 N", frontRight.cornerWeight)
+        assertEquals("120 mm", frontRight.rideHeight)
+        assertEquals("71 mm", frontRight.springPerchOffset)
+        assertEquals("+10 clicks", frontRight.bumpStiffness)
+        assertEquals("+8 clicks", frontRight.reboundStiffness)
+        assertEquals("-2.7 deg", frontRight.camber)
     }
 }

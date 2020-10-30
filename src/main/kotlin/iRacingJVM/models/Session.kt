@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDate
 import java.time.LocalTime
 
-class SessionInfo(@JsonProperty("WeekendInfo")val weekendInfo: WeekendInfo) {
-}
+class Session(@JsonProperty("WeekendInfo")val weekendInfo: WeekendInfo, @JsonProperty("CarSetup") val carSetup: CarSetup)
 
 data class WeekendInfo(
     @JsonProperty("TrackName")val trackName: String,
@@ -94,4 +93,57 @@ data class WeekendOptions(
 
 data class TelemetryOptions(
     @JsonProperty("TelemetryDiskFile")val telemetryDiskFile: String
+)
+
+data class CarSetup(
+    @JsonProperty("UpdateCount") val updateCount: Int,
+    @JsonProperty("Suspension") val suspension: Suspension,
+
+)
+
+data class Suspension(
+    @JsonProperty("Front") val front: FrontSetup,
+    @JsonProperty("LeftFront") val leftFront: LeftTireSetup,
+    @JsonProperty("LeftRear") val leftRear: LeftTireSetup,
+    @JsonProperty("RightFront") val rightFront: RightTireSetup,
+    @JsonProperty("RightRear") val rightRear: RightTireSetup,
+    @JsonProperty("Rear") val rear: RearSetup,
+)
+
+data class FrontSetup(
+    @JsonProperty("ToeIn") val toeIn: String,
+    @JsonProperty("CrossWeight") val crossWeight: String,
+    @JsonProperty("AntiRollBar") val antiRollBar: String,
+)
+
+data class RearSetup(
+    @JsonProperty("FuelLevel") val fuelLevel: String,
+    @JsonProperty("ToeIn") val toeIn: String,
+    @JsonProperty("AntiRollBar") val antiRollBar: String,
+)
+
+data class RightTireSetup(
+    @JsonProperty("ColdPressure") val coldPressure: String,
+    @JsonProperty("LastHotPressure") val lastHotPressure: String,
+    @JsonProperty("LastTempsIMO") val lastTempsOMI: String,
+    @JsonProperty("TreadRemaining") val treadRemaining: String,
+    @JsonProperty("CornerWeight") val cornerWeight: String,
+    @JsonProperty("RideHeight") val rideHeight: String,
+    @JsonProperty("SpringPerchOffset") val springPerchOffset: String,
+    @JsonProperty("BumpStiffness") val bumpStiffness: String,
+    @JsonProperty("ReboundStiffness") val reboundStiffness: String,
+    @JsonProperty("Camber") val camber: String,
+)
+
+data class LeftTireSetup(
+    @JsonProperty("ColdPressure") val coldPressure: String,
+    @JsonProperty("LastHotPressure") val lastHotPressure: String,
+    @JsonProperty("LastTempsOMI") val lastTempsOMI: String,
+    @JsonProperty("TreadRemaining") val treadRemaining: String,
+    @JsonProperty("CornerWeight") val cornerWeight: String,
+    @JsonProperty("RideHeight") val rideHeight: String,
+    @JsonProperty("SpringPerchOffset") val springPerchOffset: String,
+    @JsonProperty("BumpStiffness") val bumpStiffness: String,
+    @JsonProperty("ReboundStiffness") val reboundStiffness: String,
+    @JsonProperty("Camber") val camber: String,
 )
