@@ -10,16 +10,63 @@ import java.nio.ByteOrder
  * @param bufLength Length in bytes for one line
  */
 class iRacingSDKHeader{
+    /**
+     * this api header version, see IRSDK_VER
+     */
     val apiVersion: Int
+
+    /**
+     * bitfield using irsdk_StatusField
+     */
     val sdkStatus: Int
+
+    /**
+     * ticks per second (60 or 360 etc)
+     */
     val tickRate: Int
+
+    // session information, updated periodicaly
+
+    /**
+     * Incremented when session info changes
+     */
     val sessionInfoUpdate: Int
+
+    /**
+     * Length in bytes of session info string
+     */
     internal val sessionInfoLength: Int
+
+    /**
+     * Session info, encoded in YAML format
+     */
     internal val sessionInfoOffset: Int
+
+    // State data, output at tickRate
+
+    /**
+     * length of array pointed to by varHeaderOffset
+     */
     val numVars: Int
+
+    /**
+     * offset to irsdk_varHeader[numVars] array, Describes the variables received in varBuf
+     */
     internal val varHeaderOffset: Int
+
+    /**
+     * <= IRSDK_MAX_BUFS (3 for now)
+     */
     internal val numBuf: Int
+
+    /**
+     * length in bytes for one line
+     */
     internal val bufLength: Int
+
+    /**
+     * buffers of data being written to
+     */
     val varBuf: MutableCollection<VariableBuffer> = ArrayList(iRacingSDK.IRSDK_MAX_BUFS)
 
     constructor(byteArray: ByteArray) {

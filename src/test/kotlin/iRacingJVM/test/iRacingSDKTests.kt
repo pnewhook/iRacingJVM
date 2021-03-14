@@ -11,7 +11,7 @@ import java.time.LocalTime
 
 class iRacingSDKTests {
 
-    lateinit var telemetryData: TelemetryData
+    private lateinit var telemetryData: TelemetryData
 
     @BeforeEach
     fun setup() {
@@ -181,6 +181,43 @@ class iRacingSDKTests {
         assertEquals(0, fastestLap.carIdx)
         assertEquals(3, fastestLap.fastestLap)
         assertEquals(122.8899, fastestLap.fastestTime)
+    }
+
+    @Test
+    fun cameraInfo() {
+        val cameraInfo = telemetryData.telemetrySession.cameraInfo
+        assertEquals(20, cameraInfo.groups.size)
+        val firstGroup = cameraInfo.groups.first()
+        assertEquals("Nose", firstGroup.groupName)
+        assertEquals(1, firstGroup.cameras.size)
+        val firstCamera = firstGroup.cameras.first()
+        assertEquals(1, firstCamera.cameraNum)
+        assertEquals("CamNose", firstCamera.cameraName)
+    }
+
+    @Test
+    fun radioInfo() {
+        val radioInfo = telemetryData.telemetrySession.radioInfo
+        assertEquals(0, radioInfo.selectedRadioNum)
+        val radio = radioInfo.radios.single()
+        assertEquals(0, radio.radioNum)
+        assertEquals(2, radio.hopCount)
+        assertEquals(6, radio.numFrequencies)
+        assertEquals(0, radio.tunedToFrequencyNum)
+        assertEquals(true, radio.scanningIsOn)
+
+        assertEquals(6, radio.frequencies.size)
+        val firstFrequency = radio.frequencies.first()
+        assertEquals(0, firstFrequency.frequencyNum)
+        assertEquals("@ALLTEAMS", firstFrequency.frequencyName)
+        assertEquals(12, firstFrequency.priority)
+        assertEquals(-1, firstFrequency.carIdx)
+        assertEquals(0, firstFrequency.clubId)
+        assertEquals(true, firstFrequency.canScan)
+        assertEquals(true, firstFrequency.canSquawk)
+        assertEquals(false, firstFrequency.muted)
+        assertEquals(true, firstFrequency.isMutable)
+        assertEquals(false, firstFrequency.isDeletable)
     }
 
     @Test

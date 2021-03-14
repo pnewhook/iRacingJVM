@@ -2,10 +2,60 @@ package iRacingJVM.models
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.sun.org.apache.xpath.internal.operations.Bool
 import java.time.LocalDate
 import java.time.LocalTime
 
-class TelemetrySession(@JsonProperty("WeekendInfo")val weekendInfo: WeekendInfo, @JsonProperty("SessionInfo") val sessionInfo: SessionInfo, @JsonProperty("CarSetup") val carSetup: CarSetup)
+class TelemetrySession(
+    @JsonProperty("WeekendInfo")val weekendInfo: WeekendInfo,
+    @JsonProperty("SessionInfo") val sessionInfo: SessionInfo,
+    @JsonProperty("CameraInfo")val cameraInfo: CameraInfo,
+    @JsonProperty("RadioInfo")val radioInfo: RadioInfo,
+    @JsonProperty("CarSetup") val carSetup: CarSetup,
+)
+
+data class RadioInfo(
+    @JsonProperty("SelectedRadioNum")val selectedRadioNum: Int,
+    @JsonProperty("Radios")val radios: List<Radio>,
+)
+
+data class Radio(
+    @JsonProperty("RadioNum")val radioNum: Int,
+    @JsonProperty("HopCount")val hopCount: Int,
+    @JsonProperty("NumFrequencies")val numFrequencies:Int,
+    @JsonProperty("TunedToFrequencyNum")val tunedToFrequencyNum: Int,
+    @JsonProperty("ScanningIsOn")@JsonFormat(shape = JsonFormat.Shape.NUMBER)val scanningIsOn: Boolean,
+    @JsonProperty("Frequencies")val frequencies: List<Frequency>,
+)
+
+data class Frequency(
+    @JsonProperty("FrequencyNum")val frequencyNum: Int,
+    @JsonProperty("FrequencyName")val frequencyName: String,
+    @JsonProperty("Priority")val priority: Int,
+    @JsonProperty("CarIdx")val carIdx: Int,
+    @JsonProperty("EntryIdx")val entryIdx: Int,
+    @JsonProperty("clubID")val clubId: Int,
+    @JsonProperty("CanScan")@JsonFormat(shape = JsonFormat.Shape.NUMBER)val canScan: Boolean,
+    @JsonProperty("CanSquawk")@JsonFormat(shape = JsonFormat.Shape.NUMBER)val canSquawk: Boolean,
+    @JsonProperty("Muted")@JsonFormat(shape = JsonFormat.Shape.NUMBER)val muted: Boolean,
+    @JsonProperty("IsMutable")@JsonFormat(shape = JsonFormat.Shape.NUMBER)val isMutable: Boolean,
+    @JsonProperty("IsDeletable")@JsonFormat(shape = JsonFormat.Shape.NUMBER)val isDeletable: Boolean,
+)
+
+data class CameraInfo(
+    @JsonProperty("Groups")val groups: List<CameraInfoGroup>,
+)
+
+data class CameraInfoGroup(
+    @JsonProperty("GroupNum")val groupNum: Int,
+    @JsonProperty("GroupName")val groupName: String,
+    @JsonProperty("Cameras")val cameras: List<Camera>,
+)
+
+data class Camera(
+    @JsonProperty("CameraNum")val cameraNum: Int,
+    @JsonProperty("CameraName")val cameraName: String,
+)
 
 data class SessionInfo(
     @JsonProperty("Sessions") val sessions: List<Session>
