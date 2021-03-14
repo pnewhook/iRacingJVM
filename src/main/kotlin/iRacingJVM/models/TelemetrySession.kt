@@ -5,9 +5,58 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDate
 import java.time.LocalTime
 
-class Session(@JsonProperty("WeekendInfo")val weekendInfo: WeekendInfo, @JsonProperty("CarSetup") val carSetup: CarSetup)
+class TelemetrySession(@JsonProperty("WeekendInfo")val weekendInfo: WeekendInfo, @JsonProperty("SessionInfo") val sessionInfo: SessionInfo, @JsonProperty("CarSetup") val carSetup: CarSetup)
 
-data class WeekendInfo(
+data class SessionInfo(
+    @JsonProperty("Sessions") val sessions: List<Session>
+)
+
+data class Session(
+    @JsonProperty("SessionNum")val sessionNum: Int,
+    @JsonProperty("SessionLaps")val sessionLaps: String,
+    @JsonProperty("SessionTime")val sessionTime: String,
+    @JsonProperty("SessionType")val sessionType: String,
+    @JsonProperty("SessionTrackRubberState")val sessionTrackRubberState: String,
+    @JsonProperty("SessionName")val sessionName: String,
+    @JsonProperty("SessionSubType")val sessionSubType: String?,
+    @JsonProperty("SessionSkipped")@JsonFormat(shape = JsonFormat.Shape.NUMBER)val sessionSkipped: Boolean,
+    @JsonProperty("SessionRunGroupsUsed") val sessionRunGroupsUsed: Int,
+    @JsonProperty("ResultsPositions")val resultsPositions: List<ResultPosition>,
+    @JsonProperty("ResultsFastestLap")val resultsFastestLap: List<ResultsFastestLap>,
+    @JsonProperty("ResultsAverageLapTime")val resultsAverageLapTime: Double,
+    @JsonProperty("ResultsNumCautionFlags")val resultsNumCautionFlags: Int,
+    @JsonProperty("ResultsNumCautionLaps")val resultsNumCautionLaps: Int,
+    @JsonProperty("ResultsNumLeadChanges")val resultsNumLeadChanges: Int,
+    @JsonProperty("ResultsLapsComplete")val resultsLapsComplete: Int,
+    @JsonProperty("ResultsOfficial")@JsonFormat(shape = JsonFormat.Shape.NUMBER)val resultsOfficial: Boolean,
+)
+
+data class ResultsFastestLap(
+    @JsonProperty("CarIdx")val carIdx: Int,
+    @JsonProperty("FastestLap")val fastestLap: Int,
+    @JsonProperty("FastestTime")val fastestTime: Double,
+)
+
+data class ResultPosition(
+    @JsonProperty("Position")val position: Int,
+    @JsonProperty("ClassPosition")val classPosition: Int,
+    @JsonProperty("CarIdx")val carIdx: Int,
+    @JsonProperty("Lap")val lap: Int,
+    @JsonProperty("Time")val time: Double,
+    @JsonProperty("FastestLap")val fastestLap: Int,
+    @JsonProperty("FastestTime")val fastestTime: Double,
+    @JsonProperty("LastTime")val lastTime: Double,
+    @JsonProperty("LapsLed")val lapsLed: Int,
+    @JsonProperty("LapsComplete")val lapsComplete: Int,
+    @JsonProperty("JokerLapsComplete")val jokerLapsComplete: Int,
+    @JsonProperty("LapsDriven")val lapsDriven: Double,
+    @JsonProperty("Incidents")val incidents: Int,
+    // TODO make this an enum
+    @JsonProperty("ReasonOutId")val reasonOutId: Int,
+    @JsonProperty("ReasonOutStr")val reasonOutStr: String,
+) 
+
+data class WeekendInfo (
     @JsonProperty("TrackName")val trackName: String,
     @JsonProperty("TrackID")val trackId: Int,
     @JsonProperty("TrackLength")val trackLength: String,

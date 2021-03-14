@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import iRacingJVM.models.Session
+import iRacingJVM.models.TelemetrySession
 import iRacingJVM.models.TelemetryData
 import iRacingJVM.models.iRacingSDKHeader
 import java.nio.*
@@ -41,9 +41,9 @@ class iRacingSDK {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .build()
 
-        val sessionInfo = objectMapper.readValue(String(sessionInfoBytes), Session::class.java)
+        val sessionInfo = objectMapper.readValue(String(sessionInfoBytes), TelemetrySession::class.java)
 
-        return TelemetryData(header = header, session = sessionInfo)
+        return TelemetryData(header = header, telemetrySession = sessionInfo)
     }
 
     companion object {
